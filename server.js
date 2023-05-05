@@ -4,6 +4,8 @@ const app = express();
 const PORT = 8080;
 
 app.use(bodyParser.json())
+app.use('/patrick', express.static('public/pat.html'))
+app.use('/home', express.static('public/index.html'))
 
 app.get("/", (req, res, next) => {
     res.json("Howdy hey from out API!🤠")
