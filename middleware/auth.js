@@ -5,7 +5,7 @@ const config = process.env;
 const verifyToken = (req, res, next) => {
     // You can determine where the token should live
   const bearerToken = req.headers["authorization"];
-  const token = bearerToken.split(" ")[1];
+  const token = bearerToken?.split(" ")[1];
 
   if (!token) {
     return res.status(403).send("A token is required for authentication");
