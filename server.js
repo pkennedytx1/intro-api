@@ -4,6 +4,7 @@ const app = express();
 const PORT = 3000;
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken')
+const AWS = require("aws-sdk");
 const auth = require("./middleware/auth");
 // Configure .env
 require("dotenv").config();
@@ -16,8 +17,35 @@ app.use(bodyParser.json())
 app.use('/patrick', express.static('public/pat.html'))
 app.use('/home', express.static('public/index.html'))
 
+
+AWS.config.getCredentials(function(err) {
+  if (err) console.log(err.stack);
+  // credentials not loaded
+  else {
+    console.log("Access key:", AWS.config.credentials.accessKeyId);
+  }
+});
+
+var lambda = new AWS.Lambda({
+    region: 'us-east-2'
+});
+
 app.get("/", auth, (req, res, next) => {
     res.json("Howdy hey from out API!🤠")
+})
+
+app.get("/trigger", (req, res, next) => {
+    const params = {
+        FunctionName: 'myFunc',
+    };
+    try {
+        lambda.invoke(params, function(err, data) {
+            if (err) res.json(err);
+            else res.json(data);
+        })
+    } catch (err) {
+        res.json(err);
+    }
 })
 
 // Sign Up
