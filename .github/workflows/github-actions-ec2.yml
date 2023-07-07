@@ -6,7 +6,7 @@ on:
 
 jobs:
 #First we will see the application build or not , then we will deploy in EC2
-  Build Docker Container:
+  Build_Docker_Container:
     runs-on: ubuntu-latest
     
     steps:
@@ -15,7 +15,7 @@ jobs:
     - name: Build the docker_compose
       run: docker-compose up -d --build
 
-  Deploy Container to EC2:
+  Deploy_Container_to_EC2:
     needs: build
     runs-on: ubuntu-latest
     
