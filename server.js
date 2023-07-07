@@ -15,6 +15,7 @@ const User = require("./model/user");
 
 app.use(bodyParser.json())
 app.use('/patrick', express.static('public/pat.html'))
+app.use('/roy', express.static('public/roy.html'))
 app.use('/home', express.static('public/index.html'))
 
 
