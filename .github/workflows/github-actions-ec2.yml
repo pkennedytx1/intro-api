@@ -1,4 +1,4 @@
-name: CI/CD counter app
+name: CI/CD Intro API
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
 
 jobs:
 #First we will see the application build or not , then we will deploy in EC2
-  build:
+  Build Docker Container:
     runs-on: ubuntu-latest
     
     steps:
@@ -14,11 +14,8 @@ jobs:
     
     - name: Build the docker_compose
       run: docker-compose up -d --build
-      
-    - name: Buid the application
-      run: docker-compose exec -T counter_app npm run build
 
-  Deploy:
+  Deploy Container to EC2:
     needs: build
     runs-on: ubuntu-latest
     
@@ -35,10 +32,10 @@ jobs:
           ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
           
             #Now we have got the access of EC2 and we will start the deploy .
-            cd /home/ubuntu/CounterApp &&
-            git checkout master &&
+            cd /home/ubuntu/intro-api &&
+            git checkout main &&
             git fetch --all &&
-            git reset --hard origin/master &&
-            git pull origin master &&
+            git reset --hard origin/main &&
+            git pull origin main &&
             docker-compose -f docker-compose.prod.yml up -d --build 
           '
