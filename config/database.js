@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 
 const { MONGO_CONNECTION_STRING } = process.env;
-console.log(MONGO_CONNECTION_STRING)
 
 exports.connect = () => {
   // Connecting to the database
