@@ -7,7 +7,8 @@ services:
     ports:
       - 3000:3000
     environment:
-      - MONGO_CONNECTION_STRING=mongodb://root:rootpassword@mongodb_container
+      - MONGO_CONNECTION_STRING=mongodb://intro-db:27017/
+      - TOKEN_KEY=howdy
   intro-db:
     image: mongo:latest
     environment:
